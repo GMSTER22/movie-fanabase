@@ -1,31 +1,77 @@
-
-:root {
-  --font-body: Arial, Helvetica, sans-serif;
-  --font-headline: Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  /* colors */
-  --primary-color: #f0a868;
-  --secondary-color: #525b0f;
-  --tertiary-color: #a4b8c4;
-  --light-grey: #d0d0d0;
-  --dark-grey: #303030;
-
-  /* sizes */
-  --font-base: 18px;
-  --small-font: 0.8em;
-  --large-font: 1.2em;
-}
-
-* {
-  box-sizing: border-box;
-}
-
 body {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: var(--font-base);
-  color: var(--dark-grey);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-img {
-  max-width: 100%;
+header, main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px; /* you can adjust this value based on your design */
+  margin: 0 auto;
+}
+
+header {
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 20px;
+}
+
+#logo, #search-container, #account-link {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#movie-search {
+  width: 70%; /* adjust as needed */
+}
+
+#hero-image {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  background-color: #e4b4d5; /* dark teal */
+  border-radius: 10px;
+}
+
+#hero-image img {
+  width: 100%;
+  height: auto;
+}
+
+#genre-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.genre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  background-color: #f2f2f2; /* light grey */
+  border-radius: 10px;
+}
+
+.genre img {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
 }
