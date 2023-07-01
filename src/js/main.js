@@ -5,7 +5,7 @@ const url = import.meta.env.VITE_MOVIE_DB_BASE_URL;
 const searchParamsString = window.location.search;
 const urlSearchParams = new URLSearchParams(searchParamsString);
 
-loadHeaderFooter()
+loadHeaderFooter();
 
 if (urlSearchParams.has("approved")) {
   const isApproved = urlSearchParams.get("approved");
@@ -18,7 +18,7 @@ if (urlSearchParams.has("approved")) {
   }
 }
 
-console.log(grabMovies())
+console.log(grabMovies());
 
 async function createSessionId(requestToken) {
   const options = {

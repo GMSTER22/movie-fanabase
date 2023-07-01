@@ -42,7 +42,7 @@ grabMoviesByGenre(genreId).then((movies) => {
   );
 });
 
-async function grabMoviesByGenre(genreId) {
+async function grabMoviesByGenre(id) {
   const options = {
     method: "GET",
     headers: {
@@ -53,7 +53,7 @@ async function grabMoviesByGenre(genreId) {
 
   const res = await fetch(
     url +
-      `discover/movie?include_adult=false&include_video=true&language=en-US&page=1&sort_by=popularity.desc&with_genres=${genreId}`,
+      `discover/movie?include_adult=false&include_video=true&language=en-US&page=1&sort_by=popularity.desc&with_genres=${id}`,
     options
   );
   const movies = await res.json();
