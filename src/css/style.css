@@ -75,3 +75,21 @@ footer {
   text-align: center;
   padding: 20px;
 }
+
+
+/* genre page */
+.movie-list-container { 
+  display: flex;
+  padding: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.movie-container { 
+  width: 300px;
+  height: auto;
+  padding: 10px;
+}
+.movie-container > img { 
+  padding: 20px;
+  width: 50%;
+}

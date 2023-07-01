@@ -1,5 +1,8 @@
+import { loadHeaderFooter } from "./utils.mjs";
 const token = import.meta.env.VITE_MOVIE_DB_API_TOKEN;
 const url = import.meta.env.VITE_MOVIE_DB_BASE_URL;
+  
+loadHeaderFooter()
 
 async function createRequestToken() {
   const options = {
