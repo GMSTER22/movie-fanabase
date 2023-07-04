@@ -8,58 +8,74 @@
     <script src="./js/main.js" type="module" defer></script>
   </head>
 
-  <body>
+  <body class="homepage">
     <header class="divider" id="main-header"></header>
-    <main>
-      <div id="hero-image">
-        <img src="path_to_hero_image.jpg" alt="Hero Image" />
+
+    <nav class="navigation">
+      <button id="menu-button" type="button">
+        <img src="/images/menu-icon.svg" alt="menu button icon" />
+      </button>
+
+      <div class="categories">
+        <h3 class="navigation__title">Categories</h3>
+
+        <ul class="navigation__list">
+          <li class="navigation__item">
+            <a class="navigation__link" href="#">Popular</a>
+          </li>
+          <li class="navigation__item">
+            <a class="navigation__link" href="#">Top Rated</a>
+          </li>
+          <li class="navigation__item">
+            <a class="navigation__link" href="#">Upcoming</a>
+          </li>
+        </ul>
       </div>
 
-      <section id="genre-container">
-        <div class="row">
-          <div class="genre">
-            <img src="path_to_action_image.jpg" alt="Action" />
-            <p>Action</p>
-            <a href="./genre/index.html?genre=action&id=28">Action movies</a>
-          </div>
-          <div class="genre">
-            <img src="path_to_drama_image.jpg" alt="Drama" />
-            <p>Drama</p>
-            <a href="./genre/index.html?genre=drama&id=18">Drama movies</a>
-          </div>
-          <div class="genre">
-            <img src="path_to_comedy_image.jpg" alt="Comedy" />
-            <p>Comedy</p>
-            <a href="./genre/index.html?genre=comedy&id=35">Comedy movies</a>
-          </div>
-        </div>
-        <div class="row">
-          <div class="genre">
-            <img src="path_to_documentary_image.jpg" alt="Documentary" />
-            <p>Documentary</p>
-            <a href="./genre/index.html?genre=documentary&id=99"
-              >Documentary movies</a
+      <div class="genre">
+        <h3 class="navigation__title">Genre</h3>
+
+        <ul id="genre" class="navigation__list">
+          <li class="navigation__item">
+            <a
+              class="navigation__link"
+              href="/genre/index.html?genre=Action&id=28"
+              >Action</a
             >
-          </div>
-          <div class="genre">
-            <img src="path_to_sports_image.jpg" alt="Sports" />
-            <p>Sports</p>
-          </div>
-          <div class="genre">
-            <img src="path_to_tv_series_image.jpg" alt="TV Series" />
-            <p>TV Series</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="genre">
-            <img src="path_to_tv_series_image.jpg" alt="adventure movies" />
-            <p>Adventure Movies</p>
-            <a href="./genre/index.html?genre=adventure&id=12"
-              >Adventure movies</a
+          </li>
+          <li class="navigation__item">
+            <a
+              class="navigation__link"
+              href="/genre/index.html?genre=Adventure&id=12"
+              >Adventure</a
             >
-          </div>
+          </li>
+          <li class="navigation__item">
+            <a
+              class="navigation__link"
+              href="/genre/index.html?genre=Animation&id=16"
+              >Animation</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main>
+      <div class="hero">
+        <div class="hero__img">
+          <img src="./images/hero.jpg" alt="" />
         </div>
-      </section>
+        <div class="hero__content">
+          <h1>Take your movie game to the next level</h1>
+        </div>
+      </div>
+
+      <div class="upcoming">
+        <h2 class="upcoming__title">Upcoming Movies</h2>
+
+        <div id="upcoming__movies"></div>
+      </div>
     </main>
     <footer id="footer"></footer>
   </body>
