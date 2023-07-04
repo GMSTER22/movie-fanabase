@@ -1,16 +1,15 @@
 import {
   filterMoviesByAverageVote,
+  getMoviesByCategory,
   loadHeaderFooter,
   movieCardTemplate,
   renderListWithTemplate,
-  loadNavigation,
 } from "./utils.mjs";
 
 const token = import.meta.env.VITE_MOVIE_DB_API_TOKEN;
 const url = import.meta.env.VITE_MOVIE_DB_BASE_URL;
 
 loadHeaderFooter();
-loadNavigation();
 
 const searchParamsString = window.location.search;
 const urlSearchParams = new URLSearchParams(searchParamsString);
@@ -46,37 +45,9 @@ async function createSessionId(requestToken) {
   return sessionData;
 }
 
-// Render Upcoming movies
-
-async function getUpcomingMovies() {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  try {
-    const response = await fetch(
-      `${url}movie/upcoming?language=en-US&page=1`,
-      options
-    );
-
-    if (response.ok) {
-      const movies = await response.json();
-      return movies.results;
-    } else {
-      throw new Error("Failed to fetch upcoming movies");
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 async function renderUpcomingMovies() {
   const upcomingMoviesElement = document.querySelector("#upcoming__movies");
-  const upcomingMovies = await getUpcomingMovies();
+  const upcomingMovies = await getMoviesByCategory("upcoming", 1);
   const movieList = filterMoviesByAverageVote(upcomingMovies, 7);
 
   renderListWithTemplate(
@@ -87,3 +58,58 @@ async function renderUpcomingMovies() {
 }
 
 renderUpcomingMovies();
+
+// render genre list
+async function getMovieGenres() {
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await fetch(`${url}genre/movie/list?language=en`, options);
+
+    if (response.ok) {
+      const data = await response.json();
+      const genres = await data.genres;
+      return genres;
+    } else {
+      throw new Error("Failed to fetch the list of movie genres");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function movieGenreTemplate(genre) {
+  const { id: genreId, name: genreName } = genre;
+
+  const genreTemplate = `
+    <li class="navigation__item">
+      <a class="navigation__link" href="/genre/index.html?genre=${genreName}&id=${genreId}">${genreName}</a>
+    </li>
+  `;
+
+  return genreTemplate;
+}
+
+async function renderMovieGenres() {
+  const genreListElement = document.querySelector("#genre");
+  const genreList = await getMovieGenres();
+  renderListWithTemplate(movieGenreTemplate, genreListElement, genreList);
+}
+
+renderMovieGenres();
+
+// Menu button functionality
+
+const menuButton = document.querySelector("#menu-button");
+
+menuButton.addEventListener("click", (event) => {
+  const navigationElement = event.target.closest("nav.navigation");
+
+  navigationElement.classList.toggle("active");
+});

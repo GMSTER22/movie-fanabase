@@ -1,3 +1,4 @@
+
 const token = import.meta.env.VITE_MOVIE_DB_API_TOKEN;
 const url = import.meta.env.VITE_MOVIE_DB_BASE_URL;
 
@@ -91,70 +92,32 @@ export function filterMoviesByAverageVote(movieList, voteAverage) {
   })
 } 
 
-// load navigation
-export function loadNavigation() {
-  const navigationTemplateFn = loadTemplate("/partials/navigation.html");
+// Get movie by category
 
-  const navigationElement = document.querySelector("nav.navigation");
-
-  renderWithTemplate(navigationTemplateFn, navigationElement);
-  requestIdleCallback(renderMovieGenres, {timeout: 0})
-  requestIdleCallback(navigationAnimation, {timeout: 0})
-}
-
-// render genre list
-async function getMovieGenres() {
+export async function getMoviesByCategory(category, page = 1) {
   const options = {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   };
 
+  if (!category) return;
+
   try {
-    const response = await fetch(`${url}genre/movie/list?language=en`, options);
-    
+    const response = await fetch(
+      `${url}movie/${category}?language=en-US&page=${page}`,
+      options
+    );
+
     if (response.ok) {
-      const data = await response.json();
-      const genres = await data.genres;
-      // console.log(genres);
-      return genres;
+      const movies = await response.json();
+      return movies.results;
     } else {
-      throw new Error("Failed to fetch the list of movie genres");
+      throw new Error(`Failed to fetch ${category} movies`);
     }
   } catch (error) {
     console.log(error);
-  }  
-}
-
-function movieGenreTemplate(genre) {
-  const { id: genreId, name: genreName } = genre;
-
-  const genreTemplate = `
-    <li class="navigation__item">
-      <a class="navigation__link" href="/genre/index.html?genre=${genreName}&id=${genreId}">${genreName}</a>
-    </li>
-  `;
-
-  return genreTemplate;
-}
-
-async function renderMovieGenres() {
-  const genreListElement = document.querySelector("#genre");
-  const genreList = await getMovieGenres();
-  renderListWithTemplate(movieGenreTemplate, genreListElement, genreList);
-}
-
-// Menu button functionality
-function navigationAnimation() {
-  const menuButton = document.querySelector("#menu-button");
-
-  menuButton.addEventListener("click", event => {
-
-    const navigationElement = event.target.closest("nav.navigation");
-
-    navigationElement.classList.toggle("active");
-
-  });
+  }
 }

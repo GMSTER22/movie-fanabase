@@ -11,8 +11,6 @@
 
   /* sizes */
   --font-base: 16px;
-  --small-font: 0.8em;
-  --large-font: 1.2em;
 }
 
 *,
@@ -50,7 +48,7 @@ body {
 }
 
 @media screen and (min-width: 576px) {
-  body {
+  body.homepage {
     grid-template-areas:
       "header header"
       "nav main"
@@ -193,7 +191,7 @@ nav.navigation.active {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
 }
 
 .hero__content {
@@ -249,7 +247,7 @@ nav.navigation.active {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px;
+  padding: 5px 8px;
   font-size: 13px;
 }
 
@@ -258,12 +256,14 @@ nav.navigation.active {
   font-size: 14px;
   text-align: left;
   overflow: hidden;
+  font-weight: 800;
 }
 
 .movie-card__info span {
   display: block;
   width: min-content;
   text-align: left;
+  font-weight: 800;
 }
 
 .movie-card__overview {
@@ -307,4 +307,15 @@ nav.navigation.active {
   text-align: center;
   margin-bottom: 30px;
   color: var(--primary-color);
+}
+
+/* Authentication page */
+
+body.auth main {
+  text-align: center;
+  padding: 30px 10px;
+}
+
+body.auth h1 {
+  margin-bottom: 20px;
 }

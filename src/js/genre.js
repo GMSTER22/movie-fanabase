@@ -5,11 +5,9 @@ import {
   loadHeaderFooter,
   renderListWithTemplate,
   movieCardTemplate,
-  loadNavigation,
 } from "./utils.mjs";
 
 loadHeaderFooter();
-loadNavigation();
 
 // function movieGenreTemplate(movie) {
 //   const item = `
@@ -63,7 +61,7 @@ async function grabMoviesByGenre(id) {
 
   const res = await fetch(
     url +
-      `discover/movie?include_adult=false&include_video=true&language=en-US&page=1&sort_by=popularity.desc&with_genres=${id}`,
+      `discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${id}`,
     options
   );
   const movies = await res.json();
