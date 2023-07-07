@@ -284,6 +284,10 @@ nav.navigation.active {
   margin-bottom: 10px;
 }
 
+.movie-card__overview p {
+  text-align: left;
+}
+
 .movie-card:hover .movie-card__overview {
   transform: translateY(0%);
   font-size: 15px;
@@ -318,4 +322,16 @@ body.auth main {
 
 body.auth h1 {
   margin-bottom: 20px;
+}
+
+.movie-card__info span.green{
+  color: green
+}
+
+.movie-card__info span.orange{
+  color: orange
+}
+
+.movie-card__info span.red{
+  color: red
 }
