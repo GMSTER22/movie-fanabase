@@ -121,3 +121,17 @@ export async function getMoviesByCategory(category, page = 1) {
     console.log(error);
   }
 }
+
+export async function getMovieApi(id, fetchFunction) {
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  };
+
+  const res = await fetch(url + fetchFunction(id), options);
+  const data = res.json();
+  return data;
+}

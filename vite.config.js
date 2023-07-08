@@ -12,6 +12,7 @@ export default defineConfig({
         main: resolve(__dirname, "src/index.html"),
         auth: resolve(__dirname, "src/auth/index.html"),
         genre: resolve(__dirname, "src/genre/index.html"),
+        details: resolve(__dirname, "src/movie-details/index.html"),
       },
     },
   },
