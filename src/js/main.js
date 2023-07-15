@@ -4,6 +4,7 @@ import {
   loadHeaderFooter,
   movieCardTemplate,
   renderListWithTemplate,
+  updateAccountLink,
 } from "./utils.mjs";
 
 const token = import.meta.env.VITE_MOVIE_DB_API_TOKEN;
@@ -21,7 +22,8 @@ if (urlSearchParams.has("approved")) {
   if (isApproved) {
     createSessionId(requestToken)
       .then((response) => {
-        console.log(response, "checking");
+        sessionStorage.setItem("mf-session-id", response.session_id);
+        updateAccountLink();
       })
       .catch((err) => console.error(err));
   }
