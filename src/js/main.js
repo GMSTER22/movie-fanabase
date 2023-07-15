@@ -19,7 +19,7 @@ if (urlSearchParams.has("approved")) {
   const isApproved = urlSearchParams.get("approved");
   const requestToken = urlSearchParams.get("request_token");
 
-  if (isApproved) {
+  if (isApproved && !sessionStorage.getItem("mf-session-id")) {
     createSessionId(requestToken)
       .then((response) => {
         sessionStorage.setItem("mf-session-id", response.session_id);

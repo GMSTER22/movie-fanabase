@@ -19,24 +19,29 @@ titleElements.forEach((titleElement) => {
 });
 
 async function renderAccountMoviesType() {
+  let messageText;
+  const sessionId = sessionStorage.getItem("mf-session-id");
   const accountMoviesListElement = document.querySelector(
     ".movie-list-container"
   );
-
-  const sessionId = sessionStorage.getItem("mf-session-id");
+  // const mainElement = document.querySelector("main");
 
   if (sessionId) {
     const accountMovies = await getAccountMovies(sessionId, movieListType);
 
-    renderListWithTemplate(
-      movieCardTemplate,
-      accountMoviesListElement,
-      accountMovies
-    );
+    if (accountMovies.length === 0) {
+      messageText = `<p>No ${movieListType} movies.</p>`;
+      accountMoviesListElement.insertAdjacentHTML("beforeend", messageText);
+    } else {
+      renderListWithTemplate(
+        movieCardTemplate,
+        accountMoviesListElement,
+        accountMovies
+      );
+    }
   } else {
-    const mainElement = document.querySelector("main");
-    const messageText = `<p>Login to see your ${movieListType} movies.</p>`;
-    mainElement.insertAdjacentHTML("beforeend", messageText);
+    messageText = `<p>Login to see your ${movieListType} movies.</p>`;
+    accountMoviesListElement.insertAdjacentHTML("beforeend", messageText);
   }
 }
 
