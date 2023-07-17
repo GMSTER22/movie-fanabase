@@ -111,7 +111,7 @@ export function movieCardTemplate(movie) {
       <img class="movie-card__img" src="${IMAGE_PATH}${poster_path}" alt="${title} movie" />
       <div class="movie-card__info">
         <h3>${title}</h3>
-        <span>${vote_average}</span>
+        <span class="${getColor(vote_average)}">${vote_average}</span>
       </div>
       <div class="movie-card__overview">
         <h3>Overview</h3>
@@ -121,6 +121,16 @@ export function movieCardTemplate(movie) {
   `;
 
   return movieTemplate;
+}
+
+function getColor(vote) {
+  if (vote >= 8) {
+    return "green";
+  } else if (vote >= 5) {
+    return "orange";
+  } else {
+    return "red";
+  }
 }
 
 // Filter movies by vote average vote
