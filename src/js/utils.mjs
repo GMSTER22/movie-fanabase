@@ -1,6 +1,4 @@
-
 const token = import.meta.env.VITE_MOVIE_DB_API_TOKEN;
-
 const url = import.meta.env.VITE_MOVIE_DB_BASE_URL;
 
 export function loadHeaderFooter() {
@@ -36,7 +34,6 @@ export function renderListWithTemplate(
     parentElement.innerHTML = "";
   }
   const htmlStrings = list.map((item) => templateFn(item));
-  console.log(htmlStrings)
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
 

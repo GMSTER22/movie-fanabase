@@ -3,81 +3,89 @@ const apikey = import.meta.env.VITE_MOVIE_DB_API_KEY;
 import {
   getParam,
   loadHeaderFooter,
-  getMovieApi,
   renderWithTemplate,
+  getMovieApi,
   renderListWithTemplate,
 } from "./utils.mjs";
 
 loadHeaderFooter();
 
-const id = getParam("id");
+const paramId = getParam("id");
 
-const movieDetails = await getMovieApi(id, grabMovieDetails);
-const movieVideos = await getMovieApi(id, grabMovieVideos);
-const movieReviews = await getMovieApi(id, grabMovieReviews);
-const movieCredits = await getMovieApi(id, grabMovieCredits, apikey);
+async function renderDetailsPage() {
+  const movieDetails = await getMovieApi(paramId, grabMovieDetails);
+  const movieVideos = await getMovieApi(paramId, grabMovieVideos);
+  const movieReviews = await getMovieApi(paramId, grabMovieReviews);
+  const movieCredits = await getMovieApi(paramId, grabMovieCredits, apikey);
 
-console.log(movieCredits);
+  function grabMovieDetails(id) {
+    return `movie/${id}?language=en-US`;
+  }
 
-function grabMovieDetails(id) {
-  return `movie/${id}?language=en-US`;
+  function grabMovieVideos(id) {
+    return `movie/${id}/videos?language=en-US`;
+  }
+
+  function grabMovieReviews(id) {
+    return `movie/${id}/reviews?language=en-US&page=1`;
+  }
+
+  function grabMovieCredits(id, apiKey) {
+    return `movie/${id}/credits?api_key=${apiKey}`;
+  }
+
+  const parentElement = document.querySelector(".movie-info-container");
+  const reviewList = document.querySelector(".review-list");
+
+  await renderWithTemplate(
+    movieInfoTemplate,
+    parentElement,
+    movieDetails,
+    false,
+    "afterbegin",
+    false
+  );
+
+  const overview = document.querySelector(".movie-info__overview");
+  renderWithTemplate(
+    movieCreditsTemplate,
+    overview,
+    movieCredits,
+    false,
+    "beforeend",
+    false
+  );
+
+  renderWithTemplate(
+    movieVideoTemplate,
+    parentElement,
+    movieVideos,
+    slidesListener,
+    "afterbegin",
+    false
+  );
+
+  renderListWithTemplate(
+    movieReviewsTemplate,
+    reviewList,
+    movieReviews.results,
+    "beforeend",
+    false
+  );
+
+  if (!reviewList.innerHTML.trim() == "") {
+    const title = "<h2>Reviews</h2>";
+    reviewList.insertAdjacentHTML("afterbegin", title);
+  }
 }
 
-function grabMovieVideos(id) {
-  return `movie/${id}/videos?language=en-US`;
-}
+renderDetailsPage();
 
-function grabMovieReviews(id) {
-  return `movie/${id}/reviews?language=en-US&page=1`;
-}
-
-function grabMovieCredits(id, apiKey) {
-  return `movie/${id}/credits?api_key=${apiKey}`;
-}
-
-const parentElement = document.querySelector(".movie-info-container");
-const reviewList = document.querySelector(".review-list");
-
-const render = await renderWithTemplate(
-  movieInfoTemplate,
-  parentElement,
-  movieDetails,
-  false,
-  "afterbegin",
-  false
-);
-
-const overview = document.querySelector(".movie-info__overview");
-const renderCredits = await renderWithTemplate(
-  movieCreditsTemplate,
-  overview,
-  movieCredits,
-  false,
-  "beforeend",
-  false
-);
-
-const renderVideo = await renderWithTemplate(
-  movieVideoTemplate,
-  parentElement,
-  movieVideos,
-  slidesListener,
-  "afterbegin",
-  false
-);
-
-const renderReviews = renderListWithTemplate(
-  movieReviewsTemplate,
-  reviewList,
-  movieReviews.results,
-  "beforeend",
-  false
-);
+// templates
 
 function movieInfoTemplate(movie) {
   const IMAGE_PATH = "https://image.tmdb.org/t/p/w400";
   const {
-    id: movieId,
     title,
     vote_average,
     poster_path,
@@ -199,11 +207,6 @@ function movieVideoTemplate(videos) {
     </div>
   `;
   return movieTemplate;
-}
-
-if (!reviewList.innerHTML.trim() == "") {
-  const title = "<h2>Reviews</h2>";
-  reviewList.insertAdjacentHTML("afterbegin", title);
 }
 
 //slides
