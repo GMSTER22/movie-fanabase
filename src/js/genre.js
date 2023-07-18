@@ -65,6 +65,5 @@ async function grabMoviesByGenre(id) {
     options
   );
   const movies = await res.json();
-  console.log(movies);
   return movies;
 }

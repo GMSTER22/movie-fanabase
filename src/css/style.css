@@ -34,6 +34,10 @@ a {
   text-decoration: none;
 }
 
+h2 {
+  margin-bottom: 10px;
+}
+
 body {
   display: grid;
   grid-template-areas:
@@ -129,7 +133,7 @@ nav.navigation.active {
   }
 }
 
-.navigation>div {
+.navigation > div {
   padding: 20px 10px;
 }
 
@@ -324,17 +328,34 @@ body.auth h1 {
 }
 
 /* Details page */
-.movie-info-container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: 50px, repeat(2, 1fr);
-  margin: 20px;
-  gap: 15px;
+
+::-webkit-scrollbar {
+  width: 9px;
 }
 
-.image-container {
-  grid-row: 2/4;
-  grid-column: 4/6;
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(155, 155, 155, 0.5);
+  border-radius: 20px;
+  border: transparent;
+}
+
+.movie-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+}
+
+.movie-info__overview {
+  overflow: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary-color) var(--tertiary-color);
+  overflow-y: visible;
 }
 
 .image {
@@ -351,37 +372,49 @@ body.auth h1 {
   position: absolute;
   right: 5%;
   top: 5%;
-  background-color: #6e3434;
   color: #bcff02;
   font-weight: 700;
   font-size: 20px;
-  padding: 20px 17px;
-  border-radius: 100%;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 40px;
+  background-color: #804545;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.movie-info__title {
-  grid-column: 4/6;
+#homepage {
+  margin-top: 10px;
+  display: block;
+  color: #bb0f0f;
 }
 
-.movie-info__overview {
-  grid-row: 2/3;
-  grid-column: 3/4;
+.credits {
+  margin-top: 10px;
+}
+#cast {
+  margin-top: 1rem;
 }
 
-.movie-info__genres {
-  grid-row: 1/2;
-  grid-column: 1/3;
-}
-
-/* Carousel portion */
+/* video carousel */
 .container-carousel {
+  order: 6;
   position: relative;
-  width: fit-content;
-  height: fit-content;
-  grid-row: 3/4;
-  grid-column: 1/4;
+  width: 100%;
+  height: 100%;
   justify-self: end;
   align-self: end;
+  margin: auto;
+}
+
+.slide-container {
+  display: none;
+  height: 300px;
+}
+
+.slide-container.active {
+  display: block;
 }
 
 .slide {
@@ -389,24 +422,15 @@ body.auth h1 {
   overflow: hidden;
   padding: 15px 40px;
   z-index: 1;
-  width: 560px;
-  height: 315px;
   background-color: #5f3333;
+  height: 300px;
 }
 
-slide>iframe {
+slide > iframe {
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
-}
-
-.slide-container {
-  display: none;
-}
-
-.slide-container.active {
-  display: block;
 }
 
 #next,
@@ -428,4 +452,81 @@ slide>iframe {
 
 #prev {
   left: 0;
+}
+
+/* review */
+#outer-div {
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.review-list {
+  height: 300px;
+  padding: 0 10px;
+  overflow: hidden;
+  overflow-y: visible;
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary-color) var(--tertiary-color);
+}
+
+.review-list .review-container {
+  height: 200px;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding: 10px 20px;
+  background-color: rgb(221, 221, 221);
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary-color) var(--tertiary-color);
+}
+
+@media only screen and (min-width: 700px) {
+  .movie-info-container {
+    display: grid;
+    grid-template-columns: 200px 200px repeat(3, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+      "genres genres . . ."
+      "title title . . ."
+      "image image overview overview overview"
+      "video video video . ."
+      "review review review review .";
+    justify-items: start;
+    align-items: start;
+    margin: 20px;
+    gap: 20px;
+  }
+
+  .movie-info__genres {
+    grid-area: genres;
+  }
+
+  .movie-info__title {
+    grid-area: title;
+  }
+
+  .image-container {
+    grid-area: image;
+  }
+
+  .movie-info__overview {
+    margin-top: 10px;
+    grid-area: overview;
+  }
+
+  .container-carousel {
+    grid-area: video;
+  }
+
+  .review-list {
+    grid-area: review;
+  }
+
+  .slide-container {
+    height: 400px;
+  }
+
+  .slide {
+    height: 400px;
+  }
 }

@@ -1,5 +1,6 @@
 
 const token = import.meta.env.VITE_MOVIE_DB_API_TOKEN;
+
 const url = import.meta.env.VITE_MOVIE_DB_BASE_URL;
 
 export function loadHeaderFooter() {
@@ -35,6 +36,7 @@ export function renderListWithTemplate(
     parentElement.innerHTML = "";
   }
   const htmlStrings = list.map((item) => templateFn(item));
+  console.log(htmlStrings)
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
 
@@ -122,7 +124,7 @@ export async function getMoviesByCategory(category, page = 1) {
   }
 }
 
-export async function getMovieApi(id, fetchFunction) {
+export async function getMovieApi(id, fetchFunction, apikey=null) {
   const options = {
     method: "GET",
     headers: {
@@ -131,7 +133,7 @@ export async function getMovieApi(id, fetchFunction) {
     },
   };
 
-  const res = await fetch(url + fetchFunction(id), options);
+  const res = await fetch(url + fetchFunction(id, apikey), options);
   const data = res.json();
   return data;
 }
