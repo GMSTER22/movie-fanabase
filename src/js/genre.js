@@ -38,8 +38,9 @@ titleElements.forEach((titleElement) => {
   titleElement.textContent = title;
 });
 
+const movieListContainer = document.querySelector(".movie-list-container");
+
 grabMoviesByGenre(genreId).then((movies) => {
-  const movieListContainer = document.querySelector(".movie-list-container");
   // console.log(movies.results);
 
   renderListWithTemplate(
@@ -50,7 +51,7 @@ grabMoviesByGenre(genreId).then((movies) => {
   );
 });
 
-async function grabMoviesByGenre(id) {
+async function grabMoviesByGenre(id, page = 1) {
   const options = {
     method: "GET",
     headers: {
@@ -61,10 +62,34 @@ async function grabMoviesByGenre(id) {
 
   const res = await fetch(
     url +
-      `discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${id}`,
+      `discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${id}`,
     options
   );
   const movies = await res.json();
-  console.log(movies);
+  // console.log(movies);
   return movies;
+}
+
+// Load more movies
+const loadButton = document.querySelector("#load");
+let currentPage = 2;
+
+loadButton.addEventListener("click", onLoadButtonClick);
+
+function onLoadButtonClick(e) {
+  loadMoreMovies(e);
+}
+
+async function loadMoreMovies(e) {
+  const movies = await grabMoviesByGenre(genreId, currentPage++);
+
+  if (currentPage > movies.total_pages) e.target.setAttribute("disabled", true);
+
+  renderListWithTemplate(
+    movieCardTemplate,
+    movieListContainer,
+    movies.results,
+    "beforeend",
+    false
+  );
 }
