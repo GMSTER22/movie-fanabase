@@ -309,7 +309,7 @@ nav.navigation.active {
   color: var(--primary-color);
 }
 
-/* Authentication page */
+/* Authentication (Login and Logout) page */
 
 body.auth main {
   text-align: center;
@@ -318,4 +318,11 @@ body.auth main {
 
 body.auth h1 {
   margin-bottom: 20px;
+}
+
+/* Account movies */
+
+body.account-movies main {
+  text-align: center;
+  padding: 30px 10px;
 }

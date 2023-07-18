@@ -9,8 +9,46 @@ export function loadHeaderFooter() {
   const headerEl = document.querySelector("#main-header");
   const footerEl = document.querySelector("#footer");
 
+  const observer = new MutationObserver(onHeaderElementMutation);
+
+  observer.observe(headerEl, { childList: true });
+
   renderWithTemplate(headerTemplateFn, headerEl);
   renderWithTemplate(footerTemplateFn, footerEl);
+}
+
+function onHeaderElementMutation(mutationList, observer) {
+  for (const mutation of mutationList) {
+    if (mutation.type === "childList") {
+      const session_id = sessionStorage.getItem("mf-session-id");
+
+      if (session_id) {
+
+        updateAccountLink();
+
+        observer.disconnect();
+        
+      }
+    } 
+  }
+};
+
+export function updateAccountLink() {
+  const session_id = sessionStorage.getItem("mf-session-id");
+  const accountLinkElement = document.querySelector("#account-link a");
+
+  if (session_id) {
+
+    accountLinkElement.innerHTML = "Logout";
+    accountLinkElement.setAttribute("href", "/logout/index.html");
+
+  } else {
+
+    accountLinkElement.innerHTML = "Login";
+    accountLinkElement.setAttribute("href", "/login/index.html");
+
+  }
+
 }
 
 // grabs file at location and converts it to text.
@@ -93,7 +131,6 @@ export function filterMoviesByAverageVote(movieList, voteAverage) {
 } 
 
 // Get movie by category
-
 export async function getMoviesByCategory(category, page = 1) {
   const options = {
     method: "GET",
@@ -120,4 +157,102 @@ export async function getMoviesByCategory(category, page = 1) {
   } catch (error) {
     console.log(error);
   }
+}
+
+// Add movie to watchlist
+export async function addMovieToWatchlist(sessionId, movieId) {
+  const options = {
+    method: "POST",
+    headers: { 
+      accept: "application/json", 
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      media_type: "movie", 
+      media_id: movieId, 
+      watchlist: true
+    })
+  };
+
+  try {
+    const response = await fetch(
+      `${url}account/null/watchlist?session_id=${ sessionId }`,
+      options
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data.status_message, "Add movie to watchlist");
+      return data;
+    } else {
+      throw new Error(`Failed to Add movie to your favorites`);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// Add movie to favorite
+export async function addFavoriteMovie(sessionId, movieId) {
+  const options = {
+    method: "POST",
+    headers: { 
+      accept: "application/json", 
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      media_type: "movie", 
+      media_id: movieId, 
+      favorite: true
+    })
+  };
+
+  try {
+    const response = await fetch(
+      `${url}account/null/favorite?session_id=${ sessionId }`,
+      options
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data.status_message, "Add movie to favorite");
+      return data;
+    } else {
+      throw new Error(`Failed to Add movie to your favorites`);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// Get a movie
+export async function getAccountMovies(sessionId, movieListType) {
+
+  const options = {
+    method: "GET",
+    headers: { 
+      accept: "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  };
+
+  try {
+    const response = await fetch(
+      `${url}account/null/${ movieListType }/movies?language=en-US&page=1&session_id=${ sessionId }&sort_by=created_at.asc'`,
+      options
+    );
+
+    if (response.ok) {
+      const movies = await response.json();
+      // console.log(movies.results, "Add movie to favorite");
+      return movies.results;
+    } else {
+      throw new Error(`Failed to fetch user ${ movieListType } movies`);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+
 }
