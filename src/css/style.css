@@ -316,7 +316,30 @@ nav.navigation.active {
   color: var(--primary-color);
 }
 
-/* Authentication page */
+button#load {
+  display: block;
+  padding: 10px 30px;
+  margin: 30px auto 0;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  font-weight: 800;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button#load:not(:disabled) {
+  transform: translateY(-2px);
+  transition: transform 0.25s ease-in;
+}
+
+button#load:disabled {
+  background-color: #d8d6d6;
+  color: #5f3333cc;
+  cursor: auto;
+}
+
+/* Authentication (Login and Logout) page */
 
 body.auth main {
   text-align: center;
@@ -327,6 +350,7 @@ body.auth h1 {
   margin-bottom: 20px;
 }
 
+ 
 /* Details page */
 
 ::-webkit-scrollbar {
@@ -529,4 +553,23 @@ slide > iframe {
   .slide {
     height: 400px;
   }
+=======
+/* Account movies */
+
+body.account-movies main {
+  text-align: center;
+  padding: 30px 10px;
+}
+
+.movie-card__info span.green {
+  color: green;
+}
+
+.movie-card__info span.orange {
+  color: orange;
+}
+
+.movie-card__info span.red {
+  color: red;
+ 
 }
