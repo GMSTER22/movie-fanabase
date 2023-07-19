@@ -349,3 +349,15 @@ body.account-movies main {
   text-align: center;
   padding: 30px 10px;
 }
+
+.movie-card__info span.green {
+  color: green;
+}
+
+.movie-card__info span.orange {
+  color: orange;
+}
+
+.movie-card__info span.red {
+  color: red;
+}
