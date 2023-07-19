@@ -85,14 +85,8 @@ renderDetailsPage();
 
 function movieInfoTemplate(movie) {
   const IMAGE_PATH = "https://image.tmdb.org/t/p/w400";
-  const {
-    title,
-    vote_average,
-    poster_path,
-    overview,
-    genres,
-    homepage,
-  } = movie;
+  const { title, vote_average, poster_path, overview, genres, homepage } =
+    movie;
 
   const genresList = [];
   genres.forEach((element) => {
