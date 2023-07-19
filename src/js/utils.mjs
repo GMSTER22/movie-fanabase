@@ -1,4 +1,3 @@
-
 const token = import.meta.env.VITE_MOVIE_DB_API_TOKEN;
 const url = import.meta.env.VITE_MOVIE_DB_BASE_URL;
 
@@ -169,6 +168,20 @@ export async function getMoviesByCategory(category, page = 1) {
   }
 }
 
+ 
+export async function getMovieApi(id, fetchFunction, apikey=null) {
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  };
+
+  const res = await fetch(url + fetchFunction(id, apikey), options);
+  const data = res.json();
+  return data;
+=======
 // Add movie to watchlist
 export async function addMovieToWatchlist(sessionId, movieId) {
   const options = {
@@ -265,4 +278,5 @@ export async function getAccountMovies(sessionId, movieListType) {
     console.log(error);
   }
 
+ 
 }
