@@ -350,7 +350,6 @@ body.auth h1 {
   margin-bottom: 20px;
 }
 
- 
 /* Details page */
 
 ::-webkit-scrollbar {
@@ -389,7 +388,7 @@ body.auth h1 {
 }
 
 .image-container__img {
-  box-shadow: 10px 10px 20px 10px rgba(94, 94, 94, 0.5);
+  box-shadow: 10px 0px 20px rgba(94, 94, 94, 0.5);
 }
 
 .image-container__rating {
@@ -532,6 +531,9 @@ slide > iframe {
   .image-container {
     grid-area: image;
   }
+  .image-container__img {
+    box-shadow: 10px 10px 20px 10px rgba(94, 94, 94, 0.5);
+  }
 
   .movie-info__overview {
     margin-top: 10px;
@@ -553,7 +555,7 @@ slide > iframe {
   .slide {
     height: 400px;
   }
-=======
+}
 /* Account movies */
 
 body.account-movies main {
@@ -571,5 +573,4 @@ body.account-movies main {
 
 .movie-card__info span.red {
   color: red;
- 
 }

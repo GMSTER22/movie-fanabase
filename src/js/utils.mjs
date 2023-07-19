@@ -181,7 +181,8 @@ export async function getMovieApi(id, fetchFunction, apikey=null) {
   const res = await fetch(url + fetchFunction(id, apikey), options);
   const data = res.json();
   return data;
-=======
+}
+
 // Add movie to watchlist
 export async function addMovieToWatchlist(sessionId, movieId) {
   const options = {
