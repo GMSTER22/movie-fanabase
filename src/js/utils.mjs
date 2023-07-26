@@ -270,7 +270,7 @@ export async function getAccountMovies(sessionId, movieListType) {
 
     if (response.ok) {
       const movies = await response.json();
-      // console.log(movies.results, "Add movie to favorite");
+      console.log(movies.results, "Add movie to favorite");
       return movies.results;
     } else {
       throw new Error(`Failed to fetch user ${ movieListType } movies`);

@@ -133,7 +133,7 @@ nav.navigation.active {
   }
 }
 
-.navigation > div {
+.navigation>div {
   padding: 20px 10px;
 }
 
@@ -374,6 +374,21 @@ body.auth h1 {
   padding: 20px;
 }
 
+#favorites {
+  padding: 10px 10px;
+  border: none;
+  background: none;
+  background-color: #804545;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#favorites:hover {
+  background-color: antiquewhite;
+  color: rgb(82, 0, 0);
+}
+
 .movie-info__overview {
   overflow: hidden;
   scrollbar-width: thin;
@@ -416,6 +431,7 @@ body.auth h1 {
 .credits {
   margin-top: 10px;
 }
+
 #cast {
   margin-top: 1rem;
 }
@@ -449,7 +465,7 @@ body.auth h1 {
   height: 300px;
 }
 
-slide > iframe {
+slide>iframe {
   position: absolute;
   top: 0;
   left: 0;
@@ -509,7 +525,7 @@ slide > iframe {
     grid-template-columns: 200px 200px repeat(3, 1fr);
     grid-template-rows: auto;
     grid-template-areas:
-      "genres genres . . ."
+      "genres genres . . favorites"
       "title title . . ."
       "image image overview overview overview"
       "video video video . ."
@@ -524,6 +540,10 @@ slide > iframe {
     grid-area: genres;
   }
 
+  #favorites {
+    grid-area: favorites;
+  }
+
   .movie-info__title {
     grid-area: title;
   }
@@ -531,6 +551,7 @@ slide > iframe {
   .image-container {
     grid-area: image;
   }
+
   .image-container__img {
     box-shadow: 10px 10px 20px 10px rgba(94, 94, 94, 0.5);
   }
@@ -556,6 +577,7 @@ slide > iframe {
     height: 400px;
   }
 }
+
 /* Account movies */
 
 body.account-movies main {
