@@ -103,8 +103,64 @@ nav {
   /* color: #ffffff; */
 }
 
+.btn {
+  padding: 10px 10px;
+  border: none;
+  background: none;
+  background-color: #804545;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #703e3e;
+  color: white;
+}
+
 #search-container {
   width: 50%;
+  position: relative;
+}
+
+.search-items {
+  display: none;
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+  overflow-y: visible;
+  top: 30px;
+  z-index: 2;
+  position: absolute;
+  padding-left: 0 10px;
+  background-color: var(--tertiary-color);
+  border-radius: 0 0 10px 10px;
+}
+
+.active {
+  display: block;
+}
+
+.search-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 15px 10px;
+  gap: 10px;
+  border: var(--primary-color) solid 1px;
+}
+.search-item:hover {
+  background-color: var(--primary-color);
+}
+
+.search-item__image {
+  width: 100px;
+}
+.search-item__title {
+  margin-left: 15px;
+  align-self: center;
+  width: 60%;
 }
 
 #movie-search {
@@ -133,7 +189,7 @@ nav.navigation.active {
   }
 }
 
-.navigation>div {
+.navigation > div {
   padding: 20px 10px;
 }
 
@@ -374,21 +430,6 @@ body.auth h1 {
   padding: 20px;
 }
 
-#favorites {
-  padding: 10px 10px;
-  border: none;
-  background: none;
-  background-color: #804545;
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-#favorites:hover {
-  background-color: antiquewhite;
-  color: rgb(82, 0, 0);
-}
-
 .movie-info__overview {
   overflow: hidden;
   scrollbar-width: thin;
@@ -465,7 +506,7 @@ body.auth h1 {
   height: 300px;
 }
 
-slide>iframe {
+slide > iframe {
   position: absolute;
   top: 0;
   left: 0;
@@ -525,7 +566,7 @@ slide>iframe {
     grid-template-columns: 200px 200px repeat(3, 1fr);
     grid-template-rows: auto;
     grid-template-areas:
-      "genres genres . . favorites"
+      "genres genres buttons buttons buttons"
       "title title . . ."
       "image image overview overview overview"
       "video video video . ."
@@ -540,8 +581,13 @@ slide>iframe {
     grid-area: genres;
   }
 
-  #favorites {
-    grid-area: favorites;
+  #buttons {
+    grid-area: buttons;
+    justify-self: end;
+  }
+
+  #watchlist {
+    margin-top: 5px;
   }
 
   .movie-info__title {

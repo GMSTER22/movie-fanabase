@@ -3,6 +3,7 @@ const url = import.meta.env.VITE_MOVIE_DB_BASE_URL;
 
 export function loadHeaderFooter() {
   const headerTemplateFn = loadTemplate("/partials/header.html");
+
   const footerTemplateFn = loadTemplate("/partials/footer.html");
 
   const headerEl = document.querySelector("#main-header");
@@ -14,6 +15,50 @@ export function loadHeaderFooter() {
 
   renderWithTemplate(headerTemplateFn, headerEl);
   renderWithTemplate(footerTemplateFn, footerEl);
+
+  //search bar functionality
+  setTimeout(() => {
+    const inputSearch = document.querySelector("#movie-search");
+    const searchItemTemplate = document.querySelector([
+      "[data-search-item-template]",
+    ]);
+    const searchItems = document.querySelector("#search-items");
+
+    inputSearch.addEventListener("input", async (e) => {
+      searchItems.innerHTML = "";
+
+      const value = e.target.value;
+      const data = await getMovieApi(value, getMovieBytitle);
+
+      data.results.map((movie) => {
+        //clone search item template
+        const searchItem =
+          searchItemTemplate.content.cloneNode(true).children[0];
+        const image = searchItem.querySelector(".search-item__image");
+        const title = searchItem.querySelector(".search-item__title");
+        searchItem.href = `/movie-details/index.html?id=${movie.id}`;
+        image.src = `https://image.tmdb.org/t/p/w400${movie.poster_path}`;
+        title.innerHTML = movie.title;
+        searchItems.append(searchItem);
+      });
+
+      if (searchItems.innerHTML === "") {
+        searchItems.classList.toggle("active", false);
+      } else {
+        searchItems.classList.toggle("active", true);
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      if (e.target.closest("#search-container") === null) {
+        searchItems.classList.toggle("active", false);
+      }
+    });
+
+    function getMovieBytitle(title) {
+      return `search/movie?query=${title}`;
+    }
+  }, 1000);
 }
 
 function onHeaderElementMutation(mutationList, observer) {
@@ -22,32 +67,24 @@ function onHeaderElementMutation(mutationList, observer) {
       const session_id = sessionStorage.getItem("mf-session-id");
 
       if (session_id) {
-
         updateAccountLink();
-
         observer.disconnect();
-        
       }
-    } 
+    }
   }
-};
+}
 
 export function updateAccountLink() {
   const session_id = sessionStorage.getItem("mf-session-id");
   const accountLinkElement = document.querySelector("#account-link a");
 
   if (session_id) {
-
     accountLinkElement.innerHTML = "Logout";
     accountLinkElement.setAttribute("href", "/logout/index.html");
-
   } else {
-
     accountLinkElement.innerHTML = "Login";
     accountLinkElement.setAttribute("href", "/login/index.html");
-
   }
-
 }
 
 // grabs file at location and converts it to text.
@@ -103,7 +140,14 @@ export function getParam(param = "product") {
 // Movie card template
 export function movieCardTemplate(movie) {
   const IMAGE_PATH = "https://image.tmdb.org/t/p/w400";
-  const { id: movieId, title, vote_average, backdrop_path, poster_path, overview } = movie;
+  const {
+    id: movieId,
+    title,
+    vote_average,
+    backdrop_path,
+    poster_path,
+    overview,
+  } = movie;
 
   const movieTemplate = `
     <a class="movie-card" href="/movie-details/index.html?id=${movieId}" data-id="${movieId}">
@@ -134,10 +178,10 @@ function getColor(vote) {
 
 // Filter movies by vote average vote
 export function filterMoviesByAverageVote(movieList, voteAverage) {
-  return movieList.filter(movie => {
+  return movieList.filter((movie) => {
     if (movie.vote_average > voteAverage) return movie;
-  })
-} 
+  });
+}
 
 // Get movie by category
 export async function getMoviesByCategory(category, page = 1) {
@@ -168,8 +212,7 @@ export async function getMoviesByCategory(category, page = 1) {
   }
 }
 
- 
-export async function getMovieApi(id, fetchFunction, apikey=null) {
+export async function getMovieApi(query, fetchFunction, apikey = null) {
   const options = {
     method: "GET",
     headers: {
@@ -178,7 +221,7 @@ export async function getMovieApi(id, fetchFunction, apikey=null) {
     },
   };
 
-  const res = await fetch(url + fetchFunction(id, apikey), options);
+  const res = await fetch(url + fetchFunction(query, apikey), options);
   const data = res.json();
   return data;
 }
@@ -187,21 +230,21 @@ export async function getMovieApi(id, fetchFunction, apikey=null) {
 export async function addMovieToWatchlist(sessionId, movieId) {
   const options = {
     method: "POST",
-    headers: { 
-      accept: "application/json", 
+    headers: {
+      accept: "application/json",
       "content-type": "application/json",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      media_type: "movie", 
-      media_id: movieId, 
-      watchlist: true
-    })
+      media_type: "movie",
+      media_id: movieId,
+      watchlist: true,
+    }),
   };
 
   try {
     const response = await fetch(
-      `${url}account/null/watchlist?session_id=${ sessionId }`,
+      `${url}account/null/watchlist?session_id=${sessionId}`,
       options
     );
 
@@ -221,21 +264,21 @@ export async function addMovieToWatchlist(sessionId, movieId) {
 export async function addFavoriteMovie(sessionId, movieId) {
   const options = {
     method: "POST",
-    headers: { 
-      accept: "application/json", 
+    headers: {
+      accept: "application/json",
       "content-type": "application/json",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      media_type: "movie", 
-      media_id: movieId, 
-      favorite: true
-    })
+      media_type: "movie",
+      media_id: movieId,
+      favorite: true,
+    }),
   };
 
   try {
     const response = await fetch(
-      `${url}account/null/favorite?session_id=${ sessionId }`,
+      `${url}account/null/favorite?session_id=${sessionId}`,
       options
     );
 
@@ -253,18 +296,17 @@ export async function addFavoriteMovie(sessionId, movieId) {
 
 // Get a movie
 export async function getAccountMovies(sessionId, movieListType) {
-
   const options = {
     method: "GET",
-    headers: { 
+    headers: {
       accept: "application/json",
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   };
 
   try {
     const response = await fetch(
-      `${url}account/null/${ movieListType }/movies?language=en-US&page=1&session_id=${ sessionId }&sort_by=created_at.asc'`,
+      `${url}account/null/${movieListType}/movies?language=en-US&page=1&session_id=${sessionId}&sort_by=created_at.asc'`,
       options
     );
 
@@ -273,11 +315,9 @@ export async function getAccountMovies(sessionId, movieListType) {
       console.log(movies.results, "Add movie to favorite");
       return movies.results;
     } else {
-      throw new Error(`Failed to fetch user ${ movieListType } movies`);
+      throw new Error(`Failed to fetch user ${movieListType} movies`);
     }
   } catch (error) {
     console.log(error);
   }
-
- 
 }

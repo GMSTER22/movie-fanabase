@@ -7,6 +7,7 @@ import {
   getMovieApi,
   renderListWithTemplate,
   addFavoriteMovie,
+  addMovieToWatchlist,
 } from "./utils.mjs";
 
 loadHeaderFooter();
@@ -53,7 +54,7 @@ async function renderDetailsPage() {
     movieCreditsTemplate,
     overview,
     movieCredits,
-    addToFavorites,
+    runButtonFunctions,
     "beforeend",
     false
   );
@@ -98,7 +99,10 @@ function movieInfoTemplate(movie) {
       <span class="movie-info__genres">
         ${genresList.join(" / ")}
       </span>
-      <button id="favorites">Add to Favorites</button>
+      <div id="buttons">
+        <button class="btn" id="favorites">Add to Favorites</button>
+        <button class="btn" id="watchlist">Add to Watchlist</button>
+      </div>
       <h1 class="movie-info__title">${title}</h1>
       <div class="image-container">
          <div class="image">
@@ -145,7 +149,7 @@ function movieCreditsTemplate(credits) {
     <div class="credits"> 
       <p><b>Director:</b> ${director} </p>
       <p><b>Producers:</b><br> ${producers.join("<br>")} </p>
-      <p id="cast"><b>Main Cast:</b><br> ${mainCast.join(`<br>`)} </p>
+      <p id="cast"><b>Main Cast:</b><br> ${mainCast.join(`<br>`)}</p>
     </div>
   `;
   return creditsContainer;
@@ -224,9 +228,22 @@ function slidesListener() {
   document.getElementById("prev").addEventListener("click", prev);
 }
 
+//callback function for movie info template
+function runButtonFunctions() {
+  addToFavorites();
+  addToWatchList();
+}
+
 function addToFavorites() {
   document.querySelector("#favorites").addEventListener("click", (e) => {
     const sessionId = sessionStorage.getItem("mf-session-id");
     addFavoriteMovie(sessionId, paramId);
+  });
+}
+
+function addToWatchList() {
+  document.querySelector("#watchlist").addEventListener("click", (e) => {
+    const sessionId = sessionStorage.getItem("mf-session-id");
+    addMovieToWatchlist(sessionId, paramId);
   });
 }

@@ -5,6 +5,7 @@ import {
   movieCardTemplate,
   renderListWithTemplate,
   updateAccountLink,
+  getMovieApi,
 } from "./utils.mjs";
 
 const token = import.meta.env.VITE_MOVIE_DB_API_TOKEN;
