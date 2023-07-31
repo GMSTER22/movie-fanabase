@@ -165,7 +165,12 @@ nav {
 
 #movie-search {
   width: 100%;
-  padding: 5px;
+  height: 40px;
+  padding: 5px 15px;
+  border-radius: 50px;
+  border: white solid 2px;
+  font-size: inherit;
+  outline: none;
 }
 
 nav.navigation {
