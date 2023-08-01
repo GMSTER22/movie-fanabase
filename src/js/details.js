@@ -235,14 +235,14 @@ function runButtonFunctions() {
 }
 
 function addToFavorites() {
-  document.querySelector("#favorites").addEventListener("click", (e) => {
+  document.querySelector("#favorites").addEventListener("click", () => {
     const sessionId = sessionStorage.getItem("mf-session-id");
     addFavoriteMovie(sessionId, paramId);
   });
 }
 
 function addToWatchList() {
-  document.querySelector("#watchlist").addEventListener("click", (e) => {
+  document.querySelector("#watchlist").addEventListener("click", () => {
     const sessionId = sessionStorage.getItem("mf-session-id");
     addMovieToWatchlist(sessionId, paramId);
   });
