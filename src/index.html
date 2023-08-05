@@ -1,109 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/style.css" />
-    <script src="./js/main.js" type="module" defer></script>
 
-    <title>Movie Fanabase</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <script src="./js/main.js" type="module" defer></script>
+  <script src="https://kit.fontawesome.com/ab8b884ea6.js" crossorigin="anonymous"></script>
+  <title>Movie Fanabase</title>
+</head>
 
-  <body class="homepage">
-    <header class="divider" id="main-header"></header>
+<body class="homepage">
+  <header class="divider" id="main-header"></header>
+  <nav class="navigation">
+    <button id="menu-button" type="button">
+      <img src="/images/menu-icon.svg" alt="menu button icon" />
+    </button>
 
-    <nav class="navigation">
-      <button id="menu-button" type="button">
-        <img src="/images/menu-icon.svg" alt="menu button icon" />
-      </button>
+    <div class="categories">
+      <h3 class="navigation__title">Categories</h3>
 
-      <div class="categories">
-        <h3 class="navigation__title">Categories</h3>
+      <ul class="navigation__list">
+        <li class="navigation__item">
+          <a class="navigation__link" href="../categories/index.html?category=popular">Popular</a>
+        </li>
+        <li class="navigation__item">
+          <a class="navigation__link" href="../categories/index.html?category=top_rated">Top Rated</a>
+        </li>
+        <li class="navigation__item">
+          <a class="navigation__link" href="../categories/index.html?category=upcoming">Upcoming</a>
+        </li>
+        <li class="navigation__item">
+          <a class="navigation__link" href="./account-movies/index.html?type=watchlist">Watchlist</a>
+        </li>
+        <li class="navigation__item">
+          <a class="navigation__link" href="./account-movies/index.html?type=favorite">Favorites</a>
+        </li>
+      </ul>
+    </div>
 
-        <ul class="navigation__list">
-          <li class="navigation__item">
-            <a
-              class="navigation__link"
-              href="../categories/index.html?category=popular"
-              >Popular</a
-            >
-          </li>
-          <li class="navigation__item">
-            <a
-              class="navigation__link"
-              href="../categories/index.html?category=top_rated"
-              >Top Rated</a
-            >
-          </li>
-          <li class="navigation__item">
-            <a
-              class="navigation__link"
-              href="../categories/index.html?category=upcoming"
-              >Upcoming</a
-            >
-          </li>
-          <li class="navigation__item">
-            <a
-              class="navigation__link"
-              href="./account-movies/index.html?type=watchlist"
-              >Watchlist</a
-            >
-          </li>
-          <li class="navigation__item">
-            <a
-              class="navigation__link"
-              href="./account-movies/index.html?type=favorite"
-              >Favorites</a
-            >
-          </li>
-        </ul>
+    <div class="genre">
+      <h3 class="navigation__title">Genre</h3>
+
+      <ul id="genre" class="navigation__list">
+        <li class="navigation__item">
+          <a class="navigation__link" href="/genre/index.html?genre=Action&id=28">Action</a>
+        </li>
+        <li class="navigation__item">
+          <a class="navigation__link" href="/genre/index.html?genre=Adventure&id=12">Adventure</a>
+        </li>
+        <li class="navigation__item">
+          <a class="navigation__link" href="/genre/index.html?genre=Animation&id=16">Animation</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="hero__img">
+        <img src="./images/hero.jpg" alt="" />
       </div>
-
-      <div class="genre">
-        <h3 class="navigation__title">Genre</h3>
-
-        <ul id="genre" class="navigation__list">
-          <li class="navigation__item">
-            <a
-              class="navigation__link"
-              href="/genre/index.html?genre=Action&id=28"
-              >Action</a
-            >
-          </li>
-          <li class="navigation__item">
-            <a
-              class="navigation__link"
-              href="/genre/index.html?genre=Adventure&id=12"
-              >Adventure</a
-            >
-          </li>
-          <li class="navigation__item">
-            <a
-              class="navigation__link"
-              href="/genre/index.html?genre=Animation&id=16"
-              >Animation</a
-            >
-          </li>
-        </ul>
+      <div class="hero__content">
+        <h1>Take your movie game to the next level</h1>
       </div>
-    </nav>
+    </div>
 
-    <main>
-      <div class="hero">
-        <div class="hero__img">
-          <img src="./images/hero.jpg" alt="" />
-        </div>
-        <div class="hero__content">
-          <h1>Take your movie game to the next level</h1>
-        </div>
-      </div>
+    <div class="upcoming">
+      <h2 class="upcoming__title">Upcoming Movies</h2>
 
-      <div class="upcoming">
-        <h2 class="upcoming__title">Upcoming Movies</h2>
+      <div id="upcoming__movies"></div>
+    </div>
+  </main>
+  <footer id="footer"></footer>
+</body>
 
-        <div id="upcoming__movies"></div>
-      </div>
-    </main>
-    <footer id="footer"></footer>
-  </body>
 </html>

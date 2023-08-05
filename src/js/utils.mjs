@@ -23,6 +23,8 @@ export function loadHeaderFooter() {
       "[data-search-item-template]",
     ]);
     const searchItems = document.querySelector("#search-items");
+    const iconX = document.getElementById("icon-x");
+    console.log(iconX)
 
     inputSearch.addEventListener("input", async (e) => {
       searchItems.innerHTML = "";
@@ -43,8 +45,10 @@ export function loadHeaderFooter() {
       });
 
       if (searchItems.innerHTML === "") {
+        iconX.setAttribute("id", "icon-x")
         searchItems.classList.toggle("active", false);
       } else {
+        iconX.setAttribute("id", "icon-x-active")
         searchItems.classList.toggle("active", true);
       }
     });
@@ -58,6 +62,12 @@ export function loadHeaderFooter() {
     function getMovieBytitle(title) {
       return `search/movie?query=${title}`;
     }
+
+    iconX.addEventListener("click", () => {
+      inputSearch.value = "";
+      searchItems.classList.toggle("active", false);
+      iconX.setAttribute("id", "icon-x")
+    });
   }, 1000);
 }
 
