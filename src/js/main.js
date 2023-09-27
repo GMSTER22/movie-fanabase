@@ -116,3 +116,17 @@ menuButton.addEventListener("click", (event) => {
 
   navigationElement.classList.toggle("active");
 });
+
+document.querySelector(".hero__img").addEventListener("mouseover", (e) => {
+  const heroContent = document.querySelector(".hero__content");
+  const hero = heroContent.querySelector("h1");
+  hero.style.cssText = "color: white; background-color: black; padding: 1rem; border-radius: 1rem ";
+  
+});
+
+document.querySelector(".hero__img").addEventListener("mouseleave", (e) => {  
+  const heroContent = document.querySelector(".hero__content");
+  const hero = heroContent.querySelector("h1");
+  hero.style.cssText = "color: white; background: none";
+ })
+

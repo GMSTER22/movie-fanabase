@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Mooli&display=swap');
 
 :root {
-  --font-body: "Roboto", Arial, sans-serif;
+  --font-body: 'Mooli', sans-serif;
   /* colors */
   --primary-color: #5f3333;
   /* rampant rhubarb */
@@ -48,10 +48,11 @@ body {
   grid-template-rows: auto 1fr auto;
   height: 100vh;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1700px;
   margin: 0 auto;
   font-size: var(--font-base);
   font-family: var(--font-body);
+  background-color: #ffffff;
 }
 
 @media screen and (min-width: 576px) {
@@ -70,7 +71,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 1rem 3rem 1rem 1rem;
   background-color: var(--tertiary-color);
   color: #fff;
 }
@@ -89,20 +90,23 @@ main {
   background-color: #eee;
 }
 
-header .logo {
-  display: none;
-}
-
-header .logo-small {
-  width: 60px;
-  display: block;
-}
-
 nav {
   grid-area: nav;
   background-color: #e0e0e0;
-  /* background-color: var(--tertiary-color); */
-  /* color: #ffffff; */
+}
+
+header .logo {
+  display: none;
+  margin: 10px;
+}
+
+header .logo img {
+  width: 60px;
+}
+
+header .logo-small img {
+  width: 60px;
+  display: block;
 }
 
 .btn {
@@ -123,6 +127,10 @@ nav {
 #search-container {
   width: 50%;
   position: relative;
+}
+
+#search-container input {
+  height: 2.3rem;
 }
 
 #icon-x {
@@ -277,8 +285,13 @@ nav.navigation.active {
 }
 
 .hero__img {
+  color: white;
   grid-area: 1 / 1;
   position: relative;
+}
+
+.hero__img img { 
+  width: 100%;
 }
 
 .hero__img::after {
@@ -289,7 +302,11 @@ nav.navigation.active {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.hero__img:hover::after {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .hero__content {
@@ -298,6 +315,11 @@ nav.navigation.active {
   align-self: center;
   color: white;
   z-index: 1;
+}
+
+.hero-active {  
+  color: #b66464;
+
 }
 
 .hero__content h1 {
@@ -616,7 +638,9 @@ slide>iframe {
 
   header .logo {
     display: block;
-    width: 150px;
+    width: 5rem;
+    padding: 0;
+    color: #bb0f0f;
     overflow: hidden;
   }
 
