@@ -1,10 +1,23 @@
-<div id="logo">
+<div class="logo">
+  <a href="/">
+    <img src="/images/logo.svg" alt="movie fanabase logo" />
+  </a>
+</div>
+<div class="logo-small">
   <a href="/">
     <img src="/images/logo.svg" alt="movie fanabase logo" />
   </a>
 </div>
 <div id="search-container">
-  <input type="text" id="movie-search" placeholder="Search movies..." />
+  <input type="text" id="movie-search" placeholder="Search movies..." data-search />
+  <div id="search-items" class="search-items"></div>
+  <i id="icon-x" class="fa-solid fa-x"></i>
+  <template data-search-item-template>
+    <a class="search-item" href="#">
+      <img class="search-item__image" src="" alt="No image found" />
+      <p class="search-item__title" href="#">movie name</p>
+    </a>
+  </template>
 </div>
 <div id="account-link">
   <a href="/login/index.html">Login</a>

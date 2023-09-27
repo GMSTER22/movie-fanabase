@@ -6,6 +6,8 @@ import {
   renderWithTemplate,
   getMovieApi,
   renderListWithTemplate,
+  addFavoriteMovie,
+  addMovieToWatchlist,
 } from "./utils.mjs";
 
 loadHeaderFooter();
@@ -47,16 +49,17 @@ async function renderDetailsPage() {
   );
 
   const overview = document.querySelector(".movie-info__overview");
-  renderWithTemplate(
+
+  await renderWithTemplate(
     movieCreditsTemplate,
     overview,
     movieCredits,
-    false,
+    runButtonFunctions,
     "beforeend",
     false
   );
 
-  renderWithTemplate(
+  await renderWithTemplate(
     movieVideoTemplate,
     parentElement,
     movieVideos,
@@ -82,7 +85,6 @@ async function renderDetailsPage() {
 renderDetailsPage();
 
 // templates
-
 function movieInfoTemplate(movie) {
   const IMAGE_PATH = "https://image.tmdb.org/t/p/w400";
   const { title, vote_average, poster_path, overview, genres, homepage } =
@@ -94,6 +96,13 @@ function movieInfoTemplate(movie) {
   });
 
   const movieTemplate = `
+      <span class="movie-info__genres">
+        ${genresList.join(" / ")}
+      </span>
+      <div id="buttons">
+        <button class="btn" id="favorites">Add to Favorites</button>
+        <button class="btn" id="watchlist">Add to Watchlist</button>
+      </div>
       <h1 class="movie-info__title">${title}</h1>
       <div class="image-container">
          <div class="image">
@@ -103,15 +112,11 @@ function movieInfoTemplate(movie) {
             </span>
           </div>
       </div>
-      <span class="movie-info__genres">
-        ${genresList.join(" / ")}
-      </span>
       <div class="movie-info__overview">
         ${overview}
         <a id="homepage" href="${homepage}" target="_blank"> 
         Visit Homepage Here
         </a> 
-
       </div>
     `;
 
@@ -142,10 +147,9 @@ function movieCreditsTemplate(credits) {
 
   const creditsContainer = `
     <div class="credits"> 
-    <p><b>Director:</b> ${director} </p>
-    <p><b>Producers:</b><br> ${producers.join("<br>")} </p>
-    <p id="cast"><b>Main Cast:</b><br> ${mainCast.join(`<br>`)} </p>
-    
+      <p><b>Director:</b> ${director} </p>
+      <p><b>Producers:</b><br> ${producers.join("<br>")} </p>
+      <p id="cast"><b>Main Cast:</b><br> ${mainCast.join(`<br>`)}</p>
     </div>
   `;
   return creditsContainer;
@@ -222,4 +226,24 @@ function slidesListener() {
 
   document.getElementById("next").addEventListener("click", next);
   document.getElementById("prev").addEventListener("click", prev);
+}
+
+//callback function for movie info template
+function runButtonFunctions() {
+  addToFavorites();
+  addToWatchList();
+}
+
+function addToFavorites() {
+  document.querySelector("#favorites").addEventListener("click", () => {
+    const sessionId = sessionStorage.getItem("mf-session-id");
+    addFavoriteMovie(sessionId, paramId);
+  });
+}
+
+function addToWatchList() {
+  document.querySelector("#watchlist").addEventListener("click", () => {
+    const sessionId = sessionStorage.getItem("mf-session-id");
+    addMovieToWatchlist(sessionId, paramId);
+  });
 }

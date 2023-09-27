@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Mooli&display=swap');
 
 :root {
-  --font-body: "Roboto", Arial, sans-serif;
+  --font-body: 'Mooli', sans-serif;
   /* colors */
   --primary-color: #5f3333;
   /* rampant rhubarb */
@@ -48,10 +48,11 @@ body {
   grid-template-rows: auto 1fr auto;
   height: 100vh;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1700px;
   margin: 0 auto;
   font-size: var(--font-base);
   font-family: var(--font-body);
+  background-color: #ffffff;
 }
 
 @media screen and (min-width: 576px) {
@@ -70,7 +71,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 1rem 3rem 1rem 1rem;
   background-color: var(--tertiary-color);
   color: #fff;
 }
@@ -89,28 +90,126 @@ main {
   background-color: #eee;
 }
 
-header #logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
 nav {
   grid-area: nav;
   background-color: #e0e0e0;
-  /* background-color: var(--tertiary-color); */
-  /* color: #ffffff; */
+}
+
+header .logo {
+  display: none;
+  margin: 10px;
+}
+
+header .logo img {
+  width: 60px;
+}
+
+header .logo-small img {
+  width: 60px;
+  display: block;
+}
+
+.btn {
+  padding: 10px 10px;
+  border: none;
+  background: none;
+  background-color: #804545;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #703e3e;
+  color: white;
 }
 
 #search-container {
   width: 50%;
+  position: relative;
+}
+
+#search-container input {
+  height: 2.3rem;
+}
+
+#icon-x {
+  position: absolute;
+  top: 11px;
+  right: 20px;
+  cursor: pointer;
+  color: #671107;
+  display: none;
+}
+
+#icon-x-active {
+  position: absolute;
+  top: 11px;
+  right: 20px;
+  cursor: pointer;
+  color: #671107;
+}
+
+.fa-x:hover {
+  color: #ec7676;
+}
+
+.fa-x:active {
+  color: #c44513;
+}
+
+.search-items {
+  display: none;
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+  overflow-y: visible;
+  top: 45px;
+  z-index: 2;
+  position: absolute;
+  padding-left: 0 10px;
+  background-color: var(--tertiary-color);
+  border-radius: 0 0 10px 10px;
+}
+
+.active {
+  display: block;
+}
+
+.search-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 15px 10px;
+  gap: 10px;
+  border: var(--primary-color) solid 1px;
+}
+
+.search-item:hover {
+  background-color: var(--primary-color);
+}
+
+.search-item__image {
+  width: 100px;
+}
+
+.search-item__title {
+  margin-left: 15px;
+  align-self: center;
+  width: 60%;
 }
 
 #movie-search {
   width: 100%;
-  padding: 5px;
+  height: 40px;
+  padding: 5px 15px;
+  border-radius: 50px;
+  border: white solid 2px;
+  font-size: inherit;
+  outline: none;
 }
+
 
 nav.navigation {
   position: absolute;
@@ -133,7 +232,7 @@ nav.navigation.active {
   }
 }
 
-.navigation > div {
+.navigation>div {
   padding: 20px 10px;
 }
 
@@ -186,8 +285,13 @@ nav.navigation.active {
 }
 
 .hero__img {
+  color: white;
   grid-area: 1 / 1;
   position: relative;
+}
+
+.hero__img img { 
+  width: 100%;
 }
 
 .hero__img::after {
@@ -198,7 +302,11 @@ nav.navigation.active {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.hero__img:hover::after {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .hero__content {
@@ -207,6 +315,11 @@ nav.navigation.active {
   align-self: center;
   color: white;
   z-index: 1;
+}
+
+.hero-active {  
+  color: #b66464;
+
 }
 
 .hero__content h1 {
@@ -416,6 +529,7 @@ body.auth h1 {
 .credits {
   margin-top: 10px;
 }
+
 #cast {
   margin-top: 1rem;
 }
@@ -432,6 +546,8 @@ body.auth h1 {
 }
 
 .slide-container {
+  margin-top: 20px;
+  margin-bottom: 5px;
   display: none;
   height: 300px;
 }
@@ -449,7 +565,7 @@ body.auth h1 {
   height: 300px;
 }
 
-slide > iframe {
+slide>iframe {
   position: absolute;
   top: 0;
   left: 0;
@@ -509,7 +625,7 @@ slide > iframe {
     grid-template-columns: 200px 200px repeat(3, 1fr);
     grid-template-rows: auto;
     grid-template-areas:
-      "genres genres . . ."
+      "genres genres buttons buttons buttons"
       "title title . . ."
       "image image overview overview overview"
       "video video video . ."
@@ -520,8 +636,29 @@ slide > iframe {
     gap: 20px;
   }
 
+  header .logo {
+    display: block;
+    width: 5rem;
+    padding: 0;
+    color: #bb0f0f;
+    overflow: hidden;
+  }
+
+  header .logo-small {
+    display: none;
+  }
+
   .movie-info__genres {
     grid-area: genres;
+  }
+
+  #buttons {
+    grid-area: buttons;
+    justify-self: end;
+  }
+
+  #watchlist {
+    margin-top: 5px;
   }
 
   .movie-info__title {
@@ -531,6 +668,7 @@ slide > iframe {
   .image-container {
     grid-area: image;
   }
+
   .image-container__img {
     box-shadow: 10px 10px 20px 10px rgba(94, 94, 94, 0.5);
   }
@@ -556,6 +694,7 @@ slide > iframe {
     height: 400px;
   }
 }
+
 /* Account movies */
 
 body.account-movies main {
